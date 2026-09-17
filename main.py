@@ -366,4 +366,8 @@ def main(page: ft.Page):
     aggiorna_interfaccia()
 
 if __name__ == "__main__":
-    ft.app(target=main)
+    try:
+        ft.app(target=main)
+    except TypeError:
+        # Gestione di compatibilità per contesti di esecuzione mobile particolari
+        ft.app(target=main, view=ft.AppView.FLEX_VIEW)
