@@ -355,7 +355,7 @@ def main(page: ft.Page):
         ft.Column([
             ft.Row([
                 ft.Text("PocketLedger Pro", size=16, weight=ft.FontWeight.BOLD),
-                selettore_anno
+selettore_anno
             ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
             cards_container,
             form_section,
