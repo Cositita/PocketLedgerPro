@@ -27,8 +27,11 @@ jobs:
         run: |
           yes y | flet build apk --project "PocketLedger Pro"
 
-      - name: Upload APK Artifact
+      - name: Find and Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: pocketledger-apk
-          path: build/sapk/output/apk/*.apk
+          path: |
+            build/**/*.apk
+            build/apk/*.apk
+            **/output/*.apk
