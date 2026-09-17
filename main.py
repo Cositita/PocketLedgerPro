@@ -38,13 +38,11 @@ def init_db():
         )
     """)
     
-    # Inizializzazione Conti predefiniti
     cursor.execute("SELECT COUNT(*) FROM conti")
     if cursor.fetchone()[0] == 0:
         conti_iniziali = [('Conto Corrente',), ('Hype',), ('PostPay / Carta',), ('Contanti',)]
         cursor.executemany("INSERT INTO conti (nome) VALUES (?)", conti_iniziali)
         
-    # Inizializzazione Categorie complete per ogni esigenza
     cursor.execute("SELECT COUNT(*) FROM categorie")
     if cursor.fetchone()[0] == 0:
         cat_iniziali = [
@@ -93,7 +91,6 @@ def main(page: ft.Page):
     
     anno_corrente = str(datetime.now().year)
     
-    # Componenti UI Dashboard
     selettore_anno = ft.Dropdown(
         label="Anno",
         options=[ft.dropdown.Option(str(y)) for y in range(2024, 2031)],
@@ -106,7 +103,6 @@ def main(page: ft.Page):
     status_text = ft.Text("", size=12, color="green")
     movimenti_list = ft.ListView(expand=1, spacing=6, padding=5, height=280)
 
-    # Filtri storico
     filtro_conto = ft.Dropdown(
         label="Filtra Conto",
         options=[ft.dropdown.Option("Tutti")] + [ft.dropdown.Option(c) for c in conti_db],
@@ -120,7 +116,6 @@ def main(page: ft.Page):
         on_change=lambda e: aggiorna_interfaccia()
     )
 
-    # Campi form nuovo movimento
     form_conto = ft.Dropdown(label="Conto", options=[ft.dropdown.Option(c) for c in conti_db], expand=2, text_size=12)
     form_tipo = ft.Dropdown(label="Tipo", options=[ft.dropdown.Option("Uscita"), ft.dropdown.Option("Entrata")], value="Uscita", expand=1, text_size=12)
     form_importo = ft.TextField(label="Importo (€)", keyboard_type=ft.KeyboardType.NUMBER, expand=1, text_size=12)
@@ -128,11 +123,9 @@ def main(page: ft.Page):
     form_desc = ft.TextField(label="Descrizione", expand=3, text_size=12)
     form_data = ft.TextField(label="Data (YYYY-MM-DD)", value=datetime.now().strftime("%Y-%m-%d"), expand=1, text_size=12)
     
-    # Checkbox fiscali e ISEE
     chk_fisco = ft.Checkbox(label="Interesse Fiscale / Detraibile", value=False)
     chk_isee = ft.Checkbox(label="Rilevante per ISEE", value=False)
 
-    # Campi Dialog Modifica
     edit_id = ft.Text(visible=False)
     edit_conto = ft.Dropdown(label="Conto", options=[ft.dropdown.Option(c) for c in conti_db], width=180, text_size=12)
     edit_tipo = ft.Dropdown(label="Tipo", options=[ft.dropdown.Option("Uscita"), ft.dropdown.Option("Entrata")], width=120, text_size=12)
@@ -145,8 +138,6 @@ def main(page: ft.Page):
 
     def aggiorna_interfaccia():
         anno_selezionato = selettore_anno.value
-        
-        # Calcolo saldi per conto nell'anno selezionato
         cards_container.controls.clear()
         totale_generale = 0.0
         
@@ -166,7 +157,6 @@ def main(page: ft.Page):
                 )
             )
             
-        # Card Totale
         cards_container.controls.append(
             ft.Container(
                 content=ft.Column([
@@ -178,7 +168,6 @@ def main(page: ft.Page):
             )
         )
 
-        # Query storico filtrata
         query = "SELECT id, data, importo, tipo, conto, categoria, descrizione, fisco, isee FROM movimenti WHERE data LIKE ?"
         params = [f"{anno_selezionato}%"]
         
@@ -281,7 +270,6 @@ def main(page: ft.Page):
             status_text.color = "red"
             page.update()
 
-    # Dialog di Modifica
     def salva_modifica(e):
         try:
             conn = sqlite3.connect(DB_NAME)
@@ -328,7 +316,6 @@ def main(page: ft.Page):
             status_text.color = "red"
             page.update()
 
-    # Struttura Layout Principale
     form_section = ft.Container(
         content=ft.Column([
             ft.Text("Nuovo Movimento", size=13, weight=ft.FontWeight.BOLD, color="amber"),
@@ -365,9 +352,7 @@ def main(page: ft.Page):
 
     aggiorna_interfaccia()
 
+# Nota: Su Android/Serious Python la funzione main viene agganciata nativamente,
+# quindi non serve alcuna chiamata ft.app() finale che causava l'errore.
 if __name__ == "__main__":
-    try:
-        ft.app(target=main)
-    except TypeError:
-        # Gestione di compatibilità per contesti di esecuzione mobile particolari
-        ft.app(target=main, view=ft.AppView.FLEX_VIEW)
+    ft.app(target=main)
