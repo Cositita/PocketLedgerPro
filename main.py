@@ -95,9 +95,9 @@ def main(page: ft.Page):
         label="Anno",
         options=[ft.dropdown.Option(str(y)) for y in range(2024, 2031)],
         value=anno_corrente,
-        width=110, text_size=12,
-        on_change=lambda e: aggiorna_interfaccia()
+        width=110, text_size=12
     )
+    selettore_anno.on_change = lambda e: aggiorna_interfaccia()
     
     cards_container = ft.Row([], spacing=10, scroll=ft.ScrollMode.AUTO)
     status_text = ft.Text("", size=12, color="green")
@@ -106,15 +106,16 @@ def main(page: ft.Page):
     filtro_conto = ft.Dropdown(
         label="Filtra Conto",
         options=[ft.dropdown.Option("Tutti")] + [ft.dropdown.Option(c) for c in conti_db],
-        value="Tutti", width=150, text_size=11,
-        on_change=lambda e: aggiorna_interfaccia()
+        value="Tutti", width=150, text_size=11
     )
+    filtro_conto.on_change = lambda e: aggiorna_interfaccia()
+
     filtro_cat = ft.Dropdown(
         label="Filtra Categoria",
         options=[ft.dropdown.Option("Tutte")] + [ft.dropdown.Option(c) for c in cat_db],
-        value="Tutte", width=170, text_size=11,
-        on_change=lambda e: aggiorna_interfaccia()
+        value="Tutte", width=170, text_size=11
     )
+    filtro_cat.on_change = lambda e: aggiorna_interfaccia()
 
     form_conto = ft.Dropdown(label="Conto", options=[ft.dropdown.Option(c) for c in conti_db], expand=2, text_size=12)
     form_tipo = ft.Dropdown(label="Tipo", options=[ft.dropdown.Option("Uscita"), ft.dropdown.Option("Entrata")], value="Uscita", expand=1, text_size=12)
