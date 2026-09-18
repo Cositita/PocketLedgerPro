@@ -297,7 +297,7 @@ def main(page: ft.Page):
         ], tight=True, spacing=8),
         actions=[
             ft.TextButton("Annulla", on_click=lambda e: setattr(edit_dialog, 'open', False) or page.update()),
-            ft.ElevatedButton("Salva", on_click=salva_modifica, bgcolor="blue", color="white")
+            ft.FilledButton("Salva", on_click=salva_modifica, bgcolor="blue", color="white")
         ]
     )
 
@@ -323,7 +323,7 @@ def main(page: ft.Page):
             ft.Row([form_conto, form_tipo, form_importo, form_cat], spacing=8),
             ft.Row([form_desc, form_data], spacing=8),
             ft.Row([chk_fisco, chk_isee], spacing=15),
-            ft.Row([ft.ElevatedButton("Salva Movimento", on_click=salva_nuovo, bgcolor="blue", color="white"), status_text], spacing=10)
+            ft.Row([ft.FilledButton("Salva Movimento", on_click=salva_nuovo, bgcolor="blue", color="white"), status_text], spacing=10)
         ], spacing=8),
         bgcolor="#1e293b", padding=12, border_radius=8
     )
@@ -332,7 +332,7 @@ def main(page: ft.Page):
         content=ft.Column([
             ft.Row([
                 ft.Text("Storico Movimenti", size=13, weight=ft.FontWeight.BOLD, color="amber"),
-                ft.Row([filtro_conto, filtro_cat, ft.ElevatedButton("CSV", on_click=esporta_csv, bgcolor="green", color="white", height=30)], spacing=6)
+                ft.Row([filtro_conto, filtro_cat, ft.FilledButton("CSV", on_click=esporta_csv, bgcolor="green", color="white", height=30)], spacing=6)
             ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
             movimenti_list
         ], spacing=6),
