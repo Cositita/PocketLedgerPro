@@ -353,13 +353,4 @@ def main(page: ft.Page):
     aggiorna_interfaccia()
 
 if __name__ == "__main__":
-    ft.app(target=main)
-else:
-    # Gestione specifica per l'avvio nativo su Android (Serious Python)
-    try:
-        import sys
-        # Permette l'aggancio pulito della funzione main senza passare per l'attributo .app
-        if len(sys.argv) > 0:
-            pass
-    except Exception:
-        pass
+    ft.run(main)
