@@ -351,8 +351,3 @@ def main(page: ft.Page):
     )
 
     aggiorna_interfaccia()
-
-# Nota: Su Android/Serious Python la funzione main viene agganciata nativamente,
-# quindi non serve alcuna chiamata ft.app() finale che causava l'errore.
-if __name__ == "__main__":
-    ft.app(target=main)
