@@ -299,7 +299,7 @@ def main(page: ft.Page):
             ft.TextButton("Annulla", on_click=lambda e: setattr(edit_dialog, 'open', False) or page.update()),
             ft.Container(
                 content=ft.Text("Salva", color="white", size=12, weight=ft.FontWeight.BOLD),
-                bgcolor="blue", padding=ft.padding.symmetric(horizontal=12, vertical=8), border_radius=5,
+                bgcolor="blue", padding=10, border_radius=5,
                 on_click=salva_modifica
             )
         ]
@@ -330,7 +330,7 @@ def main(page: ft.Page):
             ft.Row([
                 ft.Container(
                     content=ft.Text("Salva Movimento", color="white", size=12, weight=ft.FontWeight.BOLD),
-                    bgcolor="blue", padding=ft.padding.symmetric(horizontal=12, vertical=8), border_radius=5,
+                    bgcolor="blue", padding=10, border_radius=5,
                     on_click=salva_nuovo
                 ),
                 status_text
@@ -348,7 +348,7 @@ def main(page: ft.Page):
                     filtro_cat, 
                     ft.Container(
                         content=ft.Text("CSV", color="white", size=11, weight=ft.FontWeight.BOLD),
-                        bgcolor="green", padding=ft.padding.symmetric(horizontal=10, vertical=6), border_radius=5,
+                        bgcolor="green", padding=8, border_radius=5,
                         on_click=esporta_csv
                     )
                 ], spacing=6)
